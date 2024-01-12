@@ -26,11 +26,11 @@ def on_btn_click():
 @st.cache_resource
 def load_model():
     model = (
-        AutoModelForCausalLM.from_pretrained("internlm/internlm-chat-7b", trust_remote_code=True)
+        AutoModelForCausalLM.from_pretrained("Shengshenlan/InternLM-7B-Shengshenlan/hf_merge", trust_remote_code=True)
         .to(torch.bfloat16)
         .cuda()
     )
-    tokenizer = AutoTokenizer.from_pretrained("internlm/internlm-chat-7b", trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained("Shengshenlan/InternLM-7B-Shengshenlan/hf_merge", trust_remote_code=True)
     return model, tokenizer
 
 
@@ -68,6 +68,10 @@ def combine_history(prompt):
 
 
 def main():
+    #模型下载
+    from modelscope import snapshot_download
+    model_dir = snapshot_download('Shengshenlan/InternLM-7B-Shengshenlan',cache_dir='./')
+    
     # torch.cuda.empty_cache()
     print("load model begin.")
     model, tokenizer = load_model()
